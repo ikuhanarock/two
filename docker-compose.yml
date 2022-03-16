@@ -1,0 +1,60 @@
+version: "3.3"
+
+services:
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8443:443"
+    volumes:
+      - socket-data:/app/tmp
+    depends_on:
+      - backend
+
+  backend:
+    build: backend/
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s"
+    env_file: .env
+    volumes:
+      - ./backend:/app
+      - gems:/usr/local/bundle
+      - socket-data:/app/tmp
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+
+  db:
+    image: postgres:12.4-alpine
+    ports:
+      - "5432:5432"
+    env_file: .env
+
+  frontend:
+    build: frontend/
+    command: yarn start:dev
+    volumes:
+      - ./frontend:/frontend
+      - node_modules:/frontend/node_modules
+      - yarn-cache:/usr/local/share/.cache/yarn/v4
+    ports:
+      - "3035:3035"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  hypernova:
+    build: frontend/
+    command: node dist/hypernova.js
+    volumes:
+      - ./frontend:/frontend
+      - node_modules:/frontend/node_modules
+    expose:
+      - "3030"
+
+volumes:
+  gems:
+  node_modules:
+  yarn-cache:
+  socket-data:
