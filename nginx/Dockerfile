@@ -4,7 +4,7 @@ ENV LANG C.UTF-8
 
 RUN apk update && \
     apk --update add --no-cache \
-      tzdata=2021e-r0 && \
+      tzdata=2022a-r0 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     rm -rf /var/cache/apk/*
 

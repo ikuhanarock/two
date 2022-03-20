@@ -12,7 +12,7 @@ RUN apk update && \
       nodejs=12.22.10-r0 \
       postgresql-client=12.10-r0 \
       postgresql-dev=12.10-r0 \
-      tzdata=2021e-r0 && \
+      tzdata=2022a-r0 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     rm -rf /var/cache/apk/*
 

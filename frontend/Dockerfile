@@ -6,7 +6,7 @@ RUN apk update && \
     apk --update add --no-cache --virtual \
       .build-deps-yarn \
       curl=7.79.1-r0 \
-      tzdata=2021e-r0 && \
+      tzdata=2022a-r0 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" && \
     tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ && \
